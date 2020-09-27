@@ -3,11 +3,7 @@ package com.mycodefu.poi.examples.fluentpoi;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import java.time.Instant;
-import java.util.Date;
 
-/**
- * A fluent interface for writing a simple spreadsheet with basic styles.
- */
 public class Sheet {
     protected final Book book;
     protected final XSSFSheet worksheet;

@@ -1,8 +1,9 @@
 package com.mycodefu.poi.examples.fluentpoi;
 
-import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 
 import java.time.Instant;
 import java.util.Date;
@@ -13,17 +14,24 @@ public class Cell {
     private final Sheet sheet;
     private final Row row;
     private final XSSFCell workcell;
+    private String dateFormat;
+    private boolean bold;
+    private Object value;
 
     private Cell(Book book, Sheet sheet, Row row, XSSFCell workcell) {
         this.book = book;
         this.sheet = sheet;
         this.row = row;
         this.workcell = workcell;
+
+        this.dateFormat = null;
+        this.bold = false;
+        this.value = null;
     }
 
     public static Cell create(Book book, Sheet sheet, Row row, int column) {
         XSSFCell workcell = row.workrow.getCell(column);
-        if (workcell==null){
+        if (workcell == null) {
             workcell = row.workrow.createCell(column);
         }
         return new Cell(book, sheet, row, workcell);
@@ -31,32 +39,27 @@ public class Cell {
 
     public Cell value(String value) {
         workcell.setCellValue(value);
+        workcell.setCellType(CellType.STRING);
+        this.value = value;
+        setCellStyles();
         return this;
     }
 
     public Cell value(Instant value) {
         workcell.setCellValue(Date.from(value));
-        workcell.setCellStyle(dateStyle(DEFAULT_DATE_FORMAT));
+        this.value = value;
+        setCellStyles();
+        return this;
+    }
+
+    public Cell bold() {
+        this.bold = true;
         return this;
     }
 
     public Cell dateFormat(String dateFormat) {
-        putDateFormat(dateFormat);
+        this.dateFormat = dateFormat;
         return this;
-    }
-
-    private CellStyle dateStyle(String dateFormat) {
-        if (!book.workstyles.containsKey("date")) {
-            putDateFormat(dateFormat);
-        }
-        return book.workstyles.get("date");
-    }
-
-    private void putDateFormat(String dateFormat) {
-        short df = book.workbook.createDataFormat().getFormat(dateFormat);
-        XSSFCellStyle dateCellStyle = book.workbook.createCellStyle();
-        dateCellStyle.setDataFormat(df);
-        book.workstyles.put("date", dateCellStyle);
     }
 
     public Row end() {
@@ -65,5 +68,31 @@ public class Cell {
 
     public Book done() {
         return book;
+    }
+
+    private void setCellStyles() {
+        if (this.value != null) {
+            if (bold || dateFormat != null || this.value instanceof Instant) {
+                XSSFCellStyle cellStyle = book.workbook.createCellStyle();
+
+                if (value instanceof Instant) {
+                    short df;
+                    if (dateFormat != null) {
+                        df = book.workbook.createDataFormat().getFormat(dateFormat);
+                    } else {
+                        df = book.workbook.createDataFormat().getFormat(DEFAULT_DATE_FORMAT);
+                    }
+                    cellStyle.setDataFormat(df);
+                }
+
+                if (bold) {
+                    XSSFFont font = book.workbook.createFont();
+                    font.setBold(true);
+                    cellStyle.setFont(font);
+                }
+
+                this.workcell.setCellStyle(cellStyle);
+            }
+        }
     }
 }
