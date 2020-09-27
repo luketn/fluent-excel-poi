@@ -64,6 +64,22 @@ class CellTest {
     }
 
     @Test
+    public void testSimple() {
+        Book.create()
+                .sheet("SimpleSheet")
+                .row(0)
+                    .cell(0).bold().value("Name").end()
+                    .cell(1).bold().value("Job").end()
+                .end()
+                .value(1, 0, "Luke")
+                .value(1, 1, "Coder")
+                .value(2, 0, "Jane")
+                .value(2, 1, "Coder")
+                .done()
+                .write("output/simplesheet.xlsx");
+    }
+
+    @Test
     public void testCreateJobsSheet() {
         Sheet jobs = Book.create().sheet("Jobs");
 
@@ -123,7 +139,6 @@ class CellTest {
             testDateInCell(job.hiredDate, expectedDateString, testHiredDateCell);
             assertFalse(testHiredDateCell.getCellStyle().getFont().getBold());
         }
-
     }
 
 
