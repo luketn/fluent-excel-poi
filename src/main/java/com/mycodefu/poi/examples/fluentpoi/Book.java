@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Book {
-    protected final Map<String, XSSFSheet> worksheets = new HashMap<>();
-    protected final Map<Integer, XSSFRow> workrows = new HashMap<>();
-    protected final Map<String, XSSFCell> workcells = new HashMap<>();
     protected final Map<String, CellStyle> workstyles = new HashMap<>();
 
     protected final XSSFWorkbook workbook;

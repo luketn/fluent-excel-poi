@@ -18,10 +18,11 @@ public class Sheet {
     }
 
     public static Sheet create(Book book, String name) {
-        if (!book.worksheets.containsKey(name)) {
-            book.worksheets.put(name, book.workbook.createSheet(name));
+        XSSFSheet worksheet = book.workbook.getSheet(name);
+        if (worksheet==null){
+            worksheet = book.workbook.createSheet(name);
         }
-        return new Sheet(book, book.worksheets.get(name));
+        return new Sheet(book, worksheet);
     }
 
     public Row row(int row) {

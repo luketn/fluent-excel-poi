@@ -16,10 +16,11 @@ public class Row {
     }
 
     public static Row create(Book book, Sheet sheet, int row){
-        if (!book.workrows.containsKey(row)) {
-            book.workrows.put(row, sheet.worksheet.createRow(row));
+        XSSFRow worksheetRow = sheet.worksheet.getRow(row);
+        if (worksheetRow==null){
+            worksheetRow = sheet.worksheet.createRow(row);
         }
-        return new Row(book, sheet, row, book.workrows.get(row));
+        return new Row(book, sheet, row, worksheetRow);
     }
 
     public Cell cell(int column){ return Cell.create(book, sheet, this, column);}

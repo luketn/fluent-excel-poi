@@ -22,11 +22,11 @@ public class Cell {
     }
 
     public static Cell create(Book book, Sheet sheet, Row row, int column) {
-        String key = String.format("%s-%s", row.rowNum, column);
-        if (!book.workcells.containsKey(key)) {
-            book.workcells.put(key, row.workrow.createCell(column));
+        XSSFCell workcell = row.workrow.getCell(column);
+        if (workcell==null){
+            workcell = row.workrow.createCell(column);
         }
-        return new Cell(book, sheet, row, book.workcells.get(key));
+        return new Cell(book, sheet, row, workcell);
     }
 
     public Cell value(String value) {
