@@ -21,6 +21,11 @@ public class Sheet {
         return new Sheet(book, worksheet);
     }
 
+    public Sheet autosizeColumn(int column) {
+        worksheet.autoSizeColumn(column);
+        return this;
+    }
+
     public Row row(int row) {
         return Row.create(book, this, row);
     }
