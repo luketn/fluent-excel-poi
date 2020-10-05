@@ -10,4 +10,5 @@ workflows:
 
 executors:
   default:
-    tag: 15
+    docker:
+      - image: cimg/openjdk:15
