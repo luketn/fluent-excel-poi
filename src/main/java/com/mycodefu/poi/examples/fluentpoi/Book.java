@@ -1,14 +1,18 @@
 package com.mycodefu.poi.examples.fluentpoi;
 
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A fluent interface for writing a simple spreadsheet with basic styles.
  */
-public class Book {
+public class Book implements AutoCloseable {
     protected final XSSFWorkbook workbook;
+    protected final Map<String, XSSFCellStyle> styles = new HashMap<>();
 
     private Book(XSSFWorkbook workbook) {
         this.workbook = workbook;
@@ -50,5 +54,14 @@ public class Book {
 
     public void write(String filePath) {
         write(new File(filePath));
+    }
+
+    @Override
+    public void close() {
+        try {
+            this.workbook.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to close the workbook.", e);
+        }
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CellTest {
+class BookTest {
 
     @Test
     public void testOriginal() throws IOException {
@@ -63,8 +63,9 @@ class CellTest {
         testDateInCell(book.sheet("Explore").worksheet, 0, 0, date1, "27/09/2020");
         testDateInCell(book.sheet("Explore").worksheet, 0, 1, date2, "28-Sep-20");
 
-        Book bookRead = Book.open(filePath);
-        assertEquals("hi there", bookRead.sheet("Explore").cell(0, 2).getValueAsString());
+        try (Book bookRead = Book.open(filePath)) {
+            assertEquals("hi there", bookRead.sheet("Explore").cell(0, 2).getValueAsString());
+        }
     }
 
     @Test
@@ -82,11 +83,12 @@ class CellTest {
                 .done()
                 .write("output/simplesheet.xlsx");
 
-        assertEquals("Coder", Book
-                .open("output/simplesheet.xlsx")
-                .sheet("SimpleSheet")
-                .cell(1,1)
-                .getValueAsString());
+        try(Book book = Book.open("output/simplesheet.xlsx")) {
+            assertEquals("Coder", book
+                    .sheet("SimpleSheet")
+                    .cell(1, 1)
+                    .getValueAsString());
+        }
     }
 
     @Test
