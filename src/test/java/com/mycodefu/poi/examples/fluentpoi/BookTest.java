@@ -116,10 +116,6 @@ class BookTest {
             jobList.add(job);
         }
 
-        jobs.autosizeColumn(0);
-        jobs.autosizeColumn(1);
-        jobs.autosizeColumn(2);
-
         Book book = jobs.done();
         book.write("output/fluentmanyrows.xlsx");
 
