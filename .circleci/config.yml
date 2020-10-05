@@ -6,5 +6,8 @@ orbs:
 workflows:
   maven_test:
     jobs:
-      - maven/test:
-          executor: cimg/openjdk:15
+      - maven/test
+
+executors:
+  default:
+    tag: 15
