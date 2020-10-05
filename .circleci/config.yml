@@ -12,4 +12,4 @@ workflows:
 executors:
   java15:
     docker:
-      - image: cimg/openjdk:15
+      - image: cimg/openjdk:15.0
