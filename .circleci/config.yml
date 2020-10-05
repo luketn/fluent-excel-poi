@@ -6,9 +6,10 @@ orbs:
 workflows:
   maven_test:
     jobs:
-      - maven/test
+      - maven/test:
+          executor: java15
 
 executors:
-  default:
+  java15:
     docker:
       - image: cimg/openjdk:15
