@@ -37,7 +37,7 @@ public class Cell {
         return new Cell(book, sheet, row, workcell);
     }
 
-    public Cell value(String value) {
+    public Cell setValue(String value) {
         workcell.setCellValue(value);
         workcell.setCellType(CellType.STRING);
         this.value = value;
@@ -45,11 +45,19 @@ public class Cell {
         return this;
     }
 
-    public Cell value(Instant value) {
+    public Cell setValue(Instant value) {
         workcell.setCellValue(Date.from(value));
         this.value = value;
         setCellStyles();
         return this;
+    }
+
+    public String getValueAsString() {
+        return workcell.getStringCellValue();
+    }
+
+    public Instant getValueAsInstant() {
+        return workcell.getDateCellValue().toInstant();
     }
 
     public Cell bold() {
@@ -95,4 +103,5 @@ public class Cell {
             }
         }
     }
+
 }

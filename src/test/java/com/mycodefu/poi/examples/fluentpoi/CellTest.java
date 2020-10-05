@@ -52,15 +52,19 @@ class CellTest {
 
         Book book = Book.create()
                 .sheet("Explore")
-                .value(0, 0, date1)
-                .cell(0, 1).dateFormat("dd-mmm-yy").value(date2).end().end()
-                .value(0, 2, "hi there")
+                .setValue(0, 0, date1)
+                .cell(0, 1).dateFormat("dd-mmm-yy").setValue(date2).end().end()
+                .setValue(0, 2, "hi there")
                 .done();
 
-        book.write("output/fluentcell.xlsx");
+        String filePath = "output/fluentcell.xlsx";
+        book.write(filePath);
 
         testDateInCell(book.sheet("Explore").worksheet, 0, 0, date1, "27/09/2020");
         testDateInCell(book.sheet("Explore").worksheet, 0, 1, date2, "28-Sep-20");
+
+        Book bookRead = Book.open(filePath);
+        assertEquals("hi there", bookRead.sheet("Explore").cell(0, 2).getValueAsString());
     }
 
     @Test
@@ -68,24 +72,30 @@ class CellTest {
         Book.create()
                 .sheet("SimpleSheet")
                 .row(0)
-                    .cell(0).bold().value("Name").end()
-                    .cell(1).bold().value("Job").end()
+                    .cell(0).bold().setValue("Name").end()
+                    .cell(1).bold().setValue("Job").end()
                 .end()
-                .value(1, 0, "Luke")
-                .value(1, 1, "Coder")
-                .value(2, 0, "Jane")
-                .value(2, 1, "Coder")
+                .setValue(1, 0, "Luke")
+                .setValue(1, 1, "Coder")
+                .setValue(2, 0, "Jane")
+                .setValue(2, 1, "Coder")
                 .done()
                 .write("output/simplesheet.xlsx");
+
+        assertEquals("Coder", Book
+                .open("output/simplesheet.xlsx")
+                .sheet("SimpleSheet")
+                .cell(1,1)
+                .getValueAsString());
     }
 
     @Test
     public void testCreateJobsSheet() {
         Sheet jobs = Book.create().sheet("Jobs");
 
-        jobs.cell(0, 0).bold().value("Name");
-        jobs.cell(0, 1).bold().value("Job");
-        jobs.cell(0, 2).bold().value("Hired");
+        jobs.cell(0, 0).bold().setValue("Name");
+        jobs.cell(0, 1).bold().setValue("Job");
+        jobs.cell(0, 2).bold().setValue("Hired");
 
         Instant startDate = Instant.from(ZonedDateTime.of(2020, 9, 27, 0, 0, 0, 0, ZoneId.systemDefault()));
         List<Job> jobList = new ArrayList<>();
@@ -97,9 +107,9 @@ class CellTest {
             );
 
             Row row = jobs.row(i);
-            row.cell(0).value(job.name);
-            row.cell(1).value(job.job);
-            row.cell(2).value(job.hiredDate);
+            row.cell(0).setValue(job.name);
+            row.cell(1).setValue(job.job);
+            row.cell(2).setValue(job.hiredDate);
 
             jobList.add(job);
         }

@@ -10,12 +10,20 @@ import java.io.*;
 public class Book {
     protected final XSSFWorkbook workbook;
 
-    private Book() {
-        this.workbook = new XSSFWorkbook();
+    private Book(XSSFWorkbook workbook) {
+        this.workbook = workbook;
     }
 
     public static Book create() {
-        return new Book();
+        return new Book(new XSSFWorkbook());
+    }
+
+    public static Book open(String filePath) {
+        try {
+            return new Book(new XSSFWorkbook(filePath));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read the workbook.", e);
+        }
     }
 
     public Sheet sheet(String name) {
