@@ -1,6 +1,7 @@
 package com.mycodefu.poi.examples.fluentpoi;
 
 import com.github.javafaker.Faker;
+import com.mycodefu.poi.examples.fluentpoi.exceptions.BookFileNotFoundException;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.*;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,11 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {
+
+    @Test()
+    public void testFileNotFound() {
+        assertThrows(BookFileNotFoundException.class, () -> Book.open("non-existent-file.xlsx"));
+    }
 
     @Test
     public void testOriginal() throws IOException {
