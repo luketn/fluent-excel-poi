@@ -21,6 +21,17 @@ public class Sheet {
         return new Sheet(book, worksheet);
     }
 
+    public Sheet erase() {
+        while (worksheet.getPhysicalNumberOfRows() > 0) {
+            worksheet.removeRow(worksheet.getRow(worksheet.getLastRowNum()));
+        }
+        return this;
+    }
+
+    public int rowCount() {
+        return worksheet.getPhysicalNumberOfRows();
+    }
+
     public Sheet autosizeColumn(int column) {
         worksheet.autoSizeColumn(column);
         return this;
@@ -45,4 +56,5 @@ public class Sheet {
     public Book done() {
         return book;
     }
+
 }

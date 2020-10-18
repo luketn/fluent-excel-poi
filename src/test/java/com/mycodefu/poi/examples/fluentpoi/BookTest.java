@@ -92,6 +92,34 @@ class BookTest {
     }
 
     @Test
+    public void testErase() {
+        Book.create()
+                .sheet("SimpleSheet")
+                .row(0)
+                    .cell(0).bold().setValue("Name").end()
+                    .cell(1).bold().setValue("Job").end()
+                .end()
+                .setValue(1, 0, "Luke")
+                .setValue(1, 1, "Coder")
+                .setValue(2, 0, "Jane")
+                .setValue(2, 1, "Coder")
+                .done()
+                .write("output/simplesheet-to-erase.xlsx");
+
+        try(Book book = Book.open("output/simplesheet-to-erase.xlsx")) {
+            Sheet simpleSheet = book.sheet("SimpleSheet");
+            assertEquals(3, simpleSheet.rowCount());
+            simpleSheet.erase();
+            assertEquals(0, simpleSheet.rowCount());
+            book.write("output/simplesheet-erased.xlsx");
+        }
+        try(Book book = Book.open("output/simplesheet-erased.xlsx")) {
+            Sheet simpleSheet = book.sheet("SimpleSheet");
+            assertEquals(0, simpleSheet.rowCount());
+        }
+    }
+
+    @Test
     public void testCreateJobsSheet() {
         Sheet jobs = Book.create().sheet("Jobs");
 

@@ -23,8 +23,8 @@ public class Book implements AutoCloseable {
     }
 
     public static Book open(String filePath) {
-        try {
-            return new Book(new XSSFWorkbook(filePath));
+        try (FileInputStream fileInputStream = new FileInputStream(filePath)){
+            return new Book(new XSSFWorkbook(fileInputStream));
         } catch (IOException e) {
             throw new RuntimeException("Failed to read the workbook.", e);
         }
