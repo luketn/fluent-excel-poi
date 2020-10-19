@@ -1,17 +1,4 @@
-# Excel POI Examples
-
-A small reference to POI and how to use it with Excel.
-
-#### Business Plan Example
-The [BusinessPlan](src/main/java/com/mycodefu/poi/examples/BusinessPlan.java) class is straight from the POI docs:
-
-http://poi.apache.org/components/spreadsheet/examples.html#business-plan
-
-It produces the Excel document:
-
-[output/businessplan.xlsx](output/businessplan.xlsx)
-
-#### Fluent POI
+# Fluent POI
 This is a concept idea for abstracting the poor API of POI with a simpler Fluent API.
 
 You use it like this:
