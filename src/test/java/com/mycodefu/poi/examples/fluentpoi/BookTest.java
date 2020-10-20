@@ -4,11 +4,14 @@ import com.github.javafaker.Faker;
 import com.mycodefu.poi.examples.fluentpoi.exceptions.BookFileNotFoundException;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -21,6 +24,10 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {
+    @BeforeAll
+    static void setup() throws IOException {
+        Files.createDirectory(Paths.get("target", "output"));
+    }
 
     @Test()
     public void testFileNotFound() {
@@ -41,7 +48,7 @@ class BookTest {
             Date date = Date.from(instant);
             cell.setCellValue(date);
 
-            try (FileOutputStream stream = new FileOutputStream(new File("output/rawpoi.xlsx"))) {
+            try (FileOutputStream stream = new FileOutputStream(new File("target/output/rawpoi.xlsx"))) {
                 wb.write(stream);
             }
 
@@ -63,7 +70,7 @@ class BookTest {
                 .setValue(0, 2, "hi there")
                 .done();
 
-        String filePath = "output/fluentcell.xlsx";
+        String filePath = "target/output/fluentcell.xlsx";
         book.write(filePath);
 
         testDateInCell(book.sheet("Explore").worksheet, 0, 0, date1, "27/09/2020");
@@ -87,9 +94,9 @@ class BookTest {
                 .setValue(2, 0, "Jane")
                 .setValue(2, 1, "Coder")
                 .done()
-                .write("output/simplesheet.xlsx");
+                .write("target/output/simplesheet.xlsx");
 
-        try(Book book = Book.open("output/simplesheet.xlsx")) {
+        try(Book book = Book.open("target/output/simplesheet.xlsx")) {
             assertEquals("Coder", book
                     .sheet("SimpleSheet")
                     .cell(1, 1)
@@ -110,16 +117,16 @@ class BookTest {
                 .setValue(2, 0, "Jane")
                 .setValue(2, 1, "Coder")
                 .done()
-                .write("output/simplesheet-to-erase.xlsx");
+                .write("target/output/simplesheet-to-erase.xlsx");
 
-        try(Book book = Book.open("output/simplesheet-to-erase.xlsx")) {
+        try(Book book = Book.open("target/output/simplesheet-to-erase.xlsx")) {
             Sheet simpleSheet = book.sheet("SimpleSheet");
             assertEquals(3, simpleSheet.rowCount());
             simpleSheet.erase();
             assertEquals(0, simpleSheet.rowCount());
-            book.write("output/simplesheet-erased.xlsx");
+            book.write("target/output/simplesheet-erased.xlsx");
         }
-        try(Book book = Book.open("output/simplesheet-erased.xlsx")) {
+        try(Book book = Book.open("target/output/simplesheet-erased.xlsx")) {
             Sheet simpleSheet = book.sheet("SimpleSheet");
             assertEquals(0, simpleSheet.rowCount());
         }
@@ -151,7 +158,7 @@ class BookTest {
         }
 
         Book book = jobs.done();
-        book.write("output/fluentmanyrows.xlsx");
+        book.write("target/output/fluentmanyrows.xlsx");
 
         XSSFSheet workbookSheet = book.workbook.getSheet("Jobs");
 
