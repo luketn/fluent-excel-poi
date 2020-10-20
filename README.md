@@ -1,5 +1,8 @@
 # Fluent POI
-This is a concept idea for abstracting the poor API of POI with a simpler Fluent API.
+An abstraction over the Excel POI library with a simpler fluent API.
+
+Dependends on:
+https://poi.apache.org/
 
 You use it like this:
 ```
@@ -16,10 +19,3 @@ Book.create()
         .done()
         .write("output/simplesheet.xlsx");
 ```
-
-It only supports dates and strings, and only one font style - bold.
-
-I found the POI syntax to be pretty obtuse. I guess they are dealing with a lot of legacy code to support and it is 
-difficult to change a long-standing API but it could really use a refresh.
-
-They may also be fighting with a poor XML model in XLSX although I haven't delved into that yet.
