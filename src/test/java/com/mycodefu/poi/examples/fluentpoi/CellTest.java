@@ -172,5 +172,15 @@ class CellTest {
         return actualStringDate;
     }
 
-    record Job(String name, String job, Instant hiredDate) { }
+    private static class Job{
+        private final String name;
+        private final String job;
+        private final Instant hiredDate;
+
+        Job(String name, String job, Instant hiredDate) {
+            this.name = name;
+            this.job = job;
+            this.hiredDate = hiredDate;
+        }
+    }
 }
