@@ -7,7 +7,9 @@ workflows:
   maven_test:
     jobs:
       - maven/test:
-          executor: [java8, java11, java15]
+          matrix:
+            parameters:
+              executor: [java8, java11, java15]
 
 executors:
   java8:
