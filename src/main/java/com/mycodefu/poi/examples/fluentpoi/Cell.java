@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class Cell {
     public static final String DEFAULT_DATE_FORMAT = "dd/mm/yyyy";
+
     private final Book book;
     private final Sheet sheet;
     private final Row row;
@@ -81,25 +82,28 @@ public class Cell {
     private void setCellStyles() {
         if (this.value != null) {
             if (bold || dateFormat != null || this.value instanceof Instant) {
-                XSSFCellStyle cellStyle = book.workbook.createCellStyle();
-
-                if (value instanceof Instant) {
-                    short df;
-                    if (dateFormat != null) {
-                        df = book.workbook.createDataFormat().getFormat(dateFormat);
-                    } else {
-                        df = book.workbook.createDataFormat().getFormat(DEFAULT_DATE_FORMAT);
+                String styleKey = String.format("%b-%s", bold, dateFormat);
+                if (!book.styles.containsKey(styleKey)) {
+                    XSSFCellStyle cellStyle = book.workbook.createCellStyle();
+                    if (value instanceof Instant) {
+                        short df;
+                        if (dateFormat != null) {
+                            df = book.workbook.createDataFormat().getFormat(dateFormat);
+                        } else {
+                            df = book.workbook.createDataFormat().getFormat(DEFAULT_DATE_FORMAT);
+                        }
+                        cellStyle.setDataFormat(df);
                     }
-                    cellStyle.setDataFormat(df);
+
+                    if (bold) {
+                        XSSFFont font = book.workbook.createFont();
+                        font.setBold(true);
+                        cellStyle.setFont(font);
+                    }
+                    book.styles.put(styleKey, cellStyle);
                 }
 
-                if (bold) {
-                    XSSFFont font = book.workbook.createFont();
-                    font.setBold(true);
-                    cellStyle.setFont(font);
-                }
-
-                this.workcell.setCellStyle(cellStyle);
+                this.workcell.setCellStyle(book.styles.get(styleKey));
             }
         }
     }
