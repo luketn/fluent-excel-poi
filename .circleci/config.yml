@@ -7,9 +7,16 @@ workflows:
   maven_test:
     jobs:
       - maven/test:
-          executor: java15
+          executor: [java8, java11, java15]
 
 executors:
+  java8:
+    docker:
+      - image: cimg/openjdk:8.0
+  java11:
+    docker:
+      - image: cimg/openjdk:11.0
   java15:
     docker:
       - image: cimg/openjdk:15.0
+
