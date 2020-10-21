@@ -51,4 +51,13 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-mycodefu-fluent-excel-poi</id>
+            <name>mycodefu-fluent-excel-poi</name>
+            <url>https://api.bintray.com/maven/mycodefu/fluent-excel-poi/fluent-excel-poi/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
 </project>

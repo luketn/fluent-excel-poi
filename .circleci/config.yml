@@ -1,15 +1,32 @@
 version: 2.1
 
 orbs:
-  maven: circleci/maven@1.0.2
+  maven: circleci/maven@1.0.3
+
+jobs:
+  publish:
+    executor: java15
+    steps:
+      - checkout
+      - run:
+          name: Overwrite Settings PWD
+          command: sed '/PWD/s/PWD/'${BINTRAY_API_KEY}'/g' settings.template.xml > settings.xml
+      - run:
+          name: Publish
+          command: mvn deploy
 
 workflows:
-  maven_test:
+  test-and-publish:
     jobs:
       - maven/test:
           matrix:
             parameters:
               executor: [java8, java11, java15]
+      - publish:
+          requires:
+            - maven/test-java8
+            - maven/test-java11
+            - maven/test-java15
 
 executors:
   java8:
