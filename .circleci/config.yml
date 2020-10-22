@@ -10,7 +10,9 @@ jobs:
       - checkout
       - run:
           name: Publish to GitHub Packages
-          command: mvn deploy --settings settings.xml
+          command: |
+            exports PACKAGE_VERSION=$(git tag -l --points-at HEAD)
+            mvn deploy --settings settings.xml
 
 publish-filter: &publish-filter
   filters:
@@ -29,7 +31,7 @@ workflows:
             parameters:
               executor: [java8, java11, java15]
       - publish:
-#          <<: *publish-filter
+          <<: *publish-filter
           requires:
             - maven/test-java8
             - maven/test-java11
