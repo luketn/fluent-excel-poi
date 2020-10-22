@@ -1,4 +1,4 @@
-package com.mycodefu.poi.examples.fluentpoi.exceptions;
+package com.mycodefu.fluentpoi.exceptions;
 
 import java.io.FileNotFoundException;
 

@@ -1,7 +1,7 @@
-package com.mycodefu.poi.examples.fluentpoi;
+package com.mycodefu.fluentpoi;
 
-import com.mycodefu.poi.examples.fluentpoi.exceptions.BookFileNotFoundException;
-import com.mycodefu.poi.examples.fluentpoi.exceptions.BookIOException;
+import com.mycodefu.fluentpoi.exceptions.BookFileNotFoundException;
+import com.mycodefu.fluentpoi.exceptions.BookIOException;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 

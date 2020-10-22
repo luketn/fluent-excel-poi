@@ -1,7 +1,7 @@
-package com.mycodefu.poi.examples.fluentpoi;
+package com.mycodefu.fluentpoi;
 
 import com.github.javafaker.Faker;
-import com.mycodefu.poi.examples.fluentpoi.exceptions.BookFileNotFoundException;
+import com.mycodefu.fluentpoi.exceptions.BookFileNotFoundException;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.*;
 import org.junit.jupiter.api.BeforeAll;

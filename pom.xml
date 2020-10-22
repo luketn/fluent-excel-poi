@@ -11,13 +11,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+        <poi.version>4.1.2</poi.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>4.1.2</version>
+            <version>${poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -54,10 +55,9 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray-mycodefu-fluent-excel-poi</id>
-            <name>mycodefu-fluent-excel-poi</name>
-            <url>https://api.bintray.com/maven/mycodefu/fluent-excel-poi/fluent-excel-poi/;publish=1</url>
+            <id>github</id>
+            <name>GitHub luketn Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/luektn/fluent-excel-poi</url>
         </repository>
     </distributionManagement>
-
 </project>

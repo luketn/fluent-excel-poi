@@ -1,4 +1,4 @@
-package com.mycodefu.poi.examples.fluentpoi;
+package com.mycodefu.fluentpoi;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
 
