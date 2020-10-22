@@ -15,16 +15,14 @@ jobs:
             mvn deploy --settings settings.xml
 
 tag-filters:
-  version-tags: &version-tag-filter
+  version-tag-only: &version-tag-filter #Only run on tag commits (not branch commits) where the tag matches the version regex e.g. 0.0.1
     filters:
-      # ignore any commit on any branch by default
       branches:
         ignore: /.*/
-      # only act on version tags in the format 0.0.1
       tags:
         only: /^\d+\.\d+\.\d+$/
 
-  all-tags: &always-run-filter
+  any-tag: &always-run-filter #Run on commits either with or without a tag.
     filters:
       tags:
         only: /.*/
