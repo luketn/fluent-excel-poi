@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Publish to GitHub Packages
           command: |
-            exports PACKAGE_VERSION=$(git tag -l --points-at HEAD)
+            export PACKAGE_VERSION=$(git tag -l --points-at HEAD)
             mvn deploy --settings settings.xml
 
 tag-filters:
