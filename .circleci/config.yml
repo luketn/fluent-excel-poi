@@ -9,9 +9,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Overwrite Settings PWD
-          command: sed '/PWD/s/PWD/'${GITHUB_TOKEN}'/g' settings.template.xml > settings.xml
-      - run:
           name: Publish to GitHub Packages
           command: mvn --settings settings.xml deploy
 
