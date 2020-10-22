@@ -14,24 +14,31 @@ jobs:
             exports PACKAGE_VERSION=$(git tag -l --points-at HEAD)
             mvn deploy --settings settings.xml
 
-publish-filter: &publish-filter
-  filters:
-    # ignore any commit on any branch by default
-    branches:
-      ignore: /.*/
-    # only act on version tags in the format 0.0.1
-    tags:
-      only: /^\d+\.\d+\.\d+$/
+tag-filters:
+  version-tags: &version-tag-filter
+    filters:
+      # ignore any commit on any branch by default
+      branches:
+        ignore: /.*/
+      # only act on version tags in the format 0.0.1
+      tags:
+        only: /^\d+\.\d+\.\d+$/
+
+  all-tags: &always-run-filter
+    filters:
+      tags:
+        only: /.*/
 
 workflows:
   test-and-publish:
     jobs:
       - maven/test:
+          <<: *always-run-filter
           matrix:
             parameters:
               executor: [java8, java11, java15]
       - publish:
-          <<: *publish-filter
+          <<: *version-tag-filter
           requires:
             - maven/test-java8
             - maven/test-java11
