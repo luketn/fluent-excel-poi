@@ -26,7 +26,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class BookTest {
     @BeforeAll
     static void setup() throws IOException {
-        Files.createDirectory(Paths.get("target", "output"));
+        try {
+            Files.createDirectory(Paths.get("target", "output"));
+        } catch (IOException e) {/*ignore*/}
     }
 
     @Test()

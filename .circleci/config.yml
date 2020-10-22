@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: Publish to GitHub Packages
-          command: mvn --settings settings.xml deploy
+          command: mvn deploy --settings settings.xml
 
 publish-filter: &publish-filter
   filters:

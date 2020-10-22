@@ -6,7 +6,7 @@
 
     <groupId>com.mycodefu</groupId>
     <artifactId>fluent-excel-poi</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,7 +57,7 @@
         <repository>
             <id>github</id>
             <name>GitHub luketn Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/luektn/fluent-excel-poi</url>
+            <url>https://maven.pkg.github.com/luketn/fluent-excel-poi</url>
         </repository>
     </distributionManagement>
 </project>
