@@ -55,6 +55,10 @@ public class Sheet {
         return row(row).cell(column).setValue(value).end().end();
     }
 
+    public Sheet setValue(int row, int column, double value) {
+        return row(row).cell(column).setValue(value).end().end();
+    }
+
     public Book done() {
         return book;
     }

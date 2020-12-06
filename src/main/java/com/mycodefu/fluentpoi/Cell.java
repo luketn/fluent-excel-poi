@@ -1,8 +1,10 @@
 package com.mycodefu.fluentpoi;
 
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 
 import java.time.Instant;
@@ -18,6 +20,7 @@ public class Cell {
     private String dateFormat;
     private boolean bold;
     private Object value;
+    private boolean currency;
 
     private Cell(Book book, Sheet sheet, Row row, XSSFCell workcell) {
         this.book = book;
@@ -77,6 +80,11 @@ public class Cell {
         return this;
     }
 
+    public Cell currency() {
+        this.currency = true;
+        return this;
+    }
+
     public Cell dateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
         return this;
@@ -92,8 +100,8 @@ public class Cell {
 
     private void setCellStyles() {
         if (this.value != null) {
-            if (bold || dateFormat != null || this.value instanceof Instant) {
-                String styleKey = String.format("%b-%s", bold, dateFormat);
+            if (bold || currency || dateFormat != null || this.value instanceof Instant) {
+                String styleKey = String.format("%b-%s-%b", bold, dateFormat, currency);
                 if (!book.styles.containsKey(styleKey)) {
                     XSSFCellStyle cellStyle = book.workbook.createCellStyle();
                     if (value instanceof Instant) {
@@ -111,6 +119,12 @@ public class Cell {
                         font.setBold(true);
                         cellStyle.setFont(font);
                     }
+
+                    if (currency && value instanceof Double) {
+                        XSSFDataFormat df = book.workbook.createDataFormat();
+                        cellStyle.setDataFormat(df.getFormat("$#,##0.00"));
+                    }
+
                     book.styles.put(styleKey, cellStyle);
                 }
 

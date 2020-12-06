@@ -85,16 +85,28 @@ class BookTest {
 
     @Test
     public void testSimple() {
+//        try(Book book = Book.open("target/output/simplesheet.xlsx")) {
+//            final Cell cell = book.sheet("SimpleSheet").cell(1, 2);
+//            System.out.println(cell);
+//        }
+
         Book.create()
                 .sheet("SimpleSheet")
                 .row(0)
                     .cell(0).bold().setValue("Name").end()
                     .cell(1).bold().setValue("Job").end()
+                    .cell(2).bold().setValue("Salary").end()
                 .end()
                 .setValue(1, 0, "Luke")
                 .setValue(1, 1, "Coder")
+                .cell(1, 2).currency().setValue(100_000d).end().end()
                 .setValue(2, 0, "Jane")
                 .setValue(2, 1, "Coder")
+                .cell(2, 2).currency().setValue(90_000d).end()
+                .end()
+                .autosizeColumn(0)
+                .autosizeColumn(1)
+                .autosizeColumn(2)
                 .done()
                 .write("target/output/simplesheet.xlsx");
 
