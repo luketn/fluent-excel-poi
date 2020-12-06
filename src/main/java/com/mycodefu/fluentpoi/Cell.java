@@ -53,6 +53,17 @@ public class Cell {
         return this;
     }
 
+    public Cell setValue(double value) {
+        workcell.setCellValue(value);
+        this.value = value;
+        setCellStyles();
+        return this;
+    }
+
+    public double getValueAsDouble() {
+        return workcell.getNumericCellValue();
+    }
+
     public String getValueAsString() {
         return workcell.getStringCellValue();
     }
