@@ -32,6 +32,8 @@ public class Sheet {
         return worksheet.getPhysicalNumberOfRows();
     }
 
+    //TODO: Add row iterator
+
     public Sheet autosizeColumn(int column) {
         worksheet.autoSizeColumn(column);
         return this;

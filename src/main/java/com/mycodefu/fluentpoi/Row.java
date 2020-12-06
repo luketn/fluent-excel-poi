@@ -25,6 +25,8 @@ public class Row {
 
     public Cell cell(int column){ return Cell.create(book, sheet, this, column);}
 
+    //TODO: Add overload to get column by letter
+
     public Sheet end(){return sheet;}
 
     public Book done(){return book;}
