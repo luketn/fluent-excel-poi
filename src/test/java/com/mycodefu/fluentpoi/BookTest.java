@@ -68,7 +68,7 @@ class BookTest {
         Book book = Book.create()
                 .sheet("Explore")
                 .setValue(0, 0, date1)
-                .cell(0, 1).dateFormat("dd-mmm-yy").setValue(date2).end().end()
+                .cell(0, 1).format("dd-mmm-yy").setValue(date2).end().end()
                 .setValue(0, 2, "hi there")
                 .done();
 

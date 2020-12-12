@@ -2,10 +2,12 @@ package com.mycodefu.fluentpoi;
 
 import com.mycodefu.fluentpoi.exceptions.BookFileNotFoundException;
 import com.mycodefu.fluentpoi.exceptions.BookIOException;
+import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,10 +19,11 @@ import java.util.Map;
  */
 public class Book implements AutoCloseable {
     protected final XSSFWorkbook workbook;
-    protected final Map<String, XSSFCellStyle> styles = new HashMap<>();
+    protected final CellStyles cellStyles;
 
     private Book(XSSFWorkbook workbook) {
         this.workbook = workbook;
+        this.cellStyles = new CellStyles(workbook);
     }
 
     public static Book create() {
